@@ -1,0 +1,31 @@
+body {
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+}
+.container {
+  margin-top: 50px;
+}
+.result-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.result-header h3 {
+  font-size: 24px;
+  color: #343a40;
+}
+.image-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.image-container img {
+  max-width: 60%;
+  height: auto;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+}
+.back-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}

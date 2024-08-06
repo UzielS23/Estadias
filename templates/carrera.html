@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Famx 4</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/pasos.css') }}" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .pricingTable-firstTable_table__getstart:disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
+    .center-button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="pricingTable">
+  <h2 class="pricingTable-title">Ejecuta los pasos para calibrar el robot</h2>
+  <h3 class="pricingTable-subtitle">{{ robot }} {{ herramienta }}</h3>
+  
+  <ul class="pricingTable-firstTable">
+    <li class="pricingTable-firstTable_table">
+      <h1 class="pricingTable-firstTable_table__header">Verificar si el cilindro hace su funcion</h1>
+      <p class="pricingTable-firstTable_table__pricing"><span>{{estado}}</span></p>
+      <button class="pricingTable-firstTable_table__getstart" id="step1" onclick="sendMQTTMessage('{{ p1 }}', '{{ mnsj }}');">Finalizado paso 1</button>
+    </li>
+    <!-- <li class="pricingTable-firstTable_table">
+      <h1 class="pricingTable-firstTable_table__header">Paso 2</h1>
+      <p class="pricingTable-firstTable_table__pricing"><span>Cumple con los pasos necesarios del paso 2</span></p>
+      <button class="pricingTable-firstTable_table__getstart" id="step2" onclick="sendMQTTMessage('{{ p2 }}', '{{ mnsj }}');" disabled>Finalizado paso 2</button>
+    </li>
+    <li class="pricingTable-firstTable_table">
+      <h1 class="pricingTable-firstTable_table__header">Paso 3</h1>
+      <p class="pricingTable-firstTable_table__pricing"><span>Cumple con los pasos necesarios del paso 3</span></p>
+      <button class="pricingTable-firstTable_table__getstart" id="step3" onclick="sendMQTTMessage('{{ p3 }}', '{{ mnsj }}');" disabled>Finalizado paso 3</button>
+    </li> -->
+  </ul>
+</div>
+
+<div class="center-button-container">
+  <a href="/mantenimiento" class="pricingTable-firstTable_table__getstart" id="finalButton" disabled>Finalizar</a>
+</div>
+
+<script src="{{ url_for('static', filename='js/pasos.js') }}"></script>
+<script>
+  document.getElementById('step1').addEventListener('click', function() {
+    document.getElementById('finalButton').disabled = false;
+  });
+
+  document.getElementById('step2').addEventListener('click', function() {
+    document.getElementById('step3').disabled = false;
+  });
+
+  document.getElementById('step3').addEventListener('click', function() {
+    document.getElementById('finalButton').disabled = false;
+  });
+</script>
+</body>
+</html>

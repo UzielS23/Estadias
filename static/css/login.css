@@ -1,0 +1,45 @@
+body {
+    background: linear-gradient(0deg, #353e9e, #043275);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background-color: white;
+    padding: 4%;
+    border-radius: 10px;
+    box-shadow: 30px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 33%;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.btn {
+    background-color: #1e88e5;
+    border-color: #1e88e5;
+    height: 45px;
+    font-size: 16px;
+    font-weight: bold;
+}

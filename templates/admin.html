@@ -1,0 +1,183 @@
+{% if 'TIPO' in session and (session['TIPO'] == 'AMTC' or session['TIPO'] == 'SUPERUSUARIO' or session['TIPO'] == 'MANTENIMIENTO') %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fujikura</title>
+    {% include 'Includes/head.html' %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/Tabla/style.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/Tabla/owl.carousel.min.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/Tabla/bootstrap.min.css') }}" rel="stylesheet" />
+</head>
+<body>
+<div class="hero_area">
+    {% include 'Includes/headeradmin.html' %}
+
+    <section class="contact_section layout_padding" id="Problemas">
+        <div class="custom_heading-container">
+            <h3>Problemas reportados</h3>
+        </div>
+        <div class="row" style="margin-top: -3%;">
+            <div class="col-md-8 mx-auto">
+                <div class="content">
+                    <div class="container">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Problema</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Área</th>
+                                    <th scope="col">Revisado</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for problema in problemas %}
+                                <tr scope="row">
+                                    <td style="color: black;">{{ problema.ID }}</td>
+                                    <td style="color: black;">{{ problema.Fecha }}</td>
+                                        <td> <div class="d-flex align-items-center">
+                                        <a class="name" style="color: black;">{{ problema.Problema }}</a>  
+                                        </div> </td>
+                                    <td style="color: black;">{{ problema.Nombre }}</td>
+                                    <td style="color: black;">{{ problema.Area }}</td>
+                                    <td>
+                                        <label class="custom-control ios-switch">
+                                            <input type="checkbox" class="ios-switch-control-input" data-id="{{ problema.ID }}" onchange="eliminarProblema(this)">
+                                            <span class="ios-switch-control-indicator"></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Tabla de cambios de ventosa -->
+<section>
+    <div class="custom_heading-container" style="margin-top: -5%;">
+        <h3>Cambios de ventosas</h3>
+    </div>
+    <div class="container table-container">
+        <table id="ventosaTable" class="table table-striped table-hover display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Fecha</th>
+                    <th>Ventosa</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ventosa in ventosa %}
+                <tr>
+                    <td>{{ ventosa.ID }}</td>
+                    <td>{{ ventosa.Nombre }}</td>
+                    <td>{{ ventosa.Fecha }}</td>
+                    <td>{{ ventosa.Ventosa }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- Tabla de usos de fusibles -->
+    <section>
+    <div class="custom_heading-container" style="margin-top: 4%;">
+        <h3>Uso de fusibles</h3>
+    </div>
+    <div class="container table-container">
+        <table id="FusibleTable" class="table table-striped table-hover display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Fecha</th>
+                    <th>Fusible</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fusible in fusible %}
+                <tr>
+                    <td>{{ fusible.ID }}</td>
+                    <td>{{ fusible.Nombre }}</td>
+                    <td>{{ fusible.Hora }}</td>
+                    <td>{{ fusible.Fusible }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </section>
+
+    <section class="container-fluid footer_section bg-dark text-white">
+        <p style="color: white;">Copyright &copy; 2024 Fujikura All Rights Reserved</p>
+    </section>
+
+    {% include 'Includes/scripts.html' %}
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#ventosaTable').DataTable({
+                "pagingType": "simple_numbers",
+                "language": {
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "lengthMenu": "Mostrar _MENU_ entradas",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas"
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#FusibleTable').DataTable({
+                "pagingType": "simple_numbers",
+                "language": {
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "lengthMenu": "Mostrar _MENU_ entradas",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas"
+                }
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='js/Tabla/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Tabla/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Tabla/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Tabla/poper.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#ventosaTable').DataTable();
+        });
+        $(document).ready(function() {
+        $('#FusibleTable').DataTable();
+        });
+    </script>
+</div>
+</body>
+</html>
+{% endif %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+  <link href="{{ url_for('static', filename='css/resultados.css') }}" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <div class="alert alert-success" style="text-align: center;">
+      <strong>Finalizado!</strong> El proceso de verificacion de sensores del nido {{ y }} a concluido
+    </div>
+    <div class="image-container">
+      <img id="final_img1" src="{{ url_for('static', filename='images/imagen_final.jpg') }}" alt="Imagen 1">
+      {% if y == 'PDC-S' %}
+      <img id="final_img2" src="{{ url_for('static', filename='images/PDC-SV.jpg') }}" alt="Imagen 2">
+      {% endif %}
+      {% if y == 'PDC-D' %}
+      <img id="final_img2" src="{{ url_for('static', filename='images/PDC-DV.jpg') }}" alt="Imagen 2">
+      {% endif %} 
+      {% if y == 'PDC-P' %}
+      <img id="final_img2" src="{{ url_for('static', filename='images/PDC-PV.jpg') }}" alt="Imagen 2">
+      {% endif %}
+      {% if y == 'PDC-R' %}
+      <img id="final_img2" src="{{ url_for('static', filename='images/PDC-RV.jpg') }}" alt="Imagen 2">
+      {% endif %}
+      {% if y == 'TBLU' %}
+      <img id="final_img2" src="{{ url_for('static', filename='images/TBLUV.jpg') }}" alt="Imagen 2">
+      {% endif %} 
+    </div>
+    <div class="back-button">
+      <a class="btn btn-outline-success btn-lg" href="/mantenimiento">Regresar</a>
+    </div>
+  </div>
+</body>
+</html>

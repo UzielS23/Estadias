@@ -1,0 +1,50 @@
+<header class="header_section">
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg custom_nav-container ">
+      <a class="navbar-brand" href="/mantenimiento">
+        <span>
+          <img src="{{ url_for('static', filename='images/Fujikura.png') }}" alt="" style="height: 120px; width: 250px;">
+        </span>
+      </a>
+      <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+          <ul class="navbar-nav  ">
+            <li class="nav-item active">
+              <a class="nav-link" href="/mantenimiento">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Buscar">Cambios de ventosa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Problemas"> Usos de fusibles </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/estadisticas"> Ver estadisticas </a>
+            </li>
+            {% if 'TIPO' in session and (session['TIPO'] == 'AMTC' or session['TIPO'] == 'SUPERUSUARIO') %}
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">Opciones de administrador <span class="sr-only">(current)</span></a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      <div class="profile">
+        {% if 'TIPO' in session and (session['TIPO'] == 'AMTC' or session['TIPO'] == 'SUPERUSUARIO') %}
+        <img src="{{ url_for('static', filename='images/perfilS.webp') }}" alt="Imagen de perfil">
+        {% elif 'TIPO' in session and session['TIPO'] == 'MANTENIMIENTO' %}
+        <img src="{{ url_for('static', filename='images/perfil.webp') }}" alt="Imagen de perfil">
+        {% endif %}
+        <a href="{{ url_for('logout_usuario') | safe }}" style="color: white; text-decoration: none;" onclick="confirmLogout(event)">
+          <span>{{ session['nombre_usuario'] }}</span>
+      </a>          
+    </div>      
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,1 @@
+pyinstaller --add-data "templates;templates" --add-data "static;static" --noconfirm manager.py

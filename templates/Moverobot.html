@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control Interface</title>
+    {% include 'Includes/head.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link href="{{ url_for('static', filename='css/moverobot.css') }}" rel="stylesheet" />
+</head>
+<body>
+    {% include 'Includes/header.html' %}
+    <div class="container mt-5">
+        <div class="text-center mb-3">
+            <a href="/mrobot2" id="switchRobot" class="btn btn-primary">Cambiar a robot B</a>
+            <button id="changeTool" class="btn btn-info ml-2" onclick="changeTool();">Cambiar a Tool 4</button>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control-panel">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <button class="btn btn-secondary m-2 arrow-btn" onclick="moveRobot('+Y');sendMQTTMessage3('MY');">&uarr; Y</button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <button class="btn btn-secondary m-2 arrow-btn" onclick="moveRobot('-X');sendMQTTMessage3('MX-');">&larr; X</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-secondary m-2 arrow-btn" onclick="moveRobot('+X');sendMQTTMessage3('MX');">X &rarr;</button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <button class="btn btn-secondary m-2 arrow-btn" onclick="moveRobot('-Y');sendMQTTMessage3('MY-');">&darr; Y</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-panel mt-4">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <button class="btn btn-secondary m-2 arrow-btn" onclick="moveRobot('+Z');sendMQTTMessage3('MZ');">&uarr; Z</button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <button class="btn btn-secondary m-2 arrow-btn" onclick="moveRobot('-Z');sendMQTTMessage3('MZ-');">&darr; Z</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-panel mt-4">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <button class="btn btn-secondary m-2 curve-btn" onclick="moveRobot('+U');sendMQTTMessage3('MU');">&#x21B7; U</button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-secondary m-2 curve-btn" onclick="moveRobot('-U');sendMQTTMessage3('MU-');">&#x21B6; U</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input id="numberInput" type="number" class="form-control" placeholder="Escribe el numero (520 - 999)" min="520" max="999" step="1" required>
+                </div>                
+                <div class="text-center mt-3">
+                    <button id="savePoint" class="btn btn-success" onclick="sendMQTTMessageGP();">Guardar punto</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-panel">
+                    <div class="form-group">
+                        <label for="currentPositionX">Coordenadas actuales</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" id="currentPositionX" placeholder="X (mm)" value="-40.691">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="currentPositionY" placeholder="Y (mm)" value="573.861">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="currentPositionZ" placeholder="Z (mm)" value="-28">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <input type="text" class="form-control" id="currentPositionU" placeholder="U (deg)" value="-21.966">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="currentPositionV" placeholder="V (deg)">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="currentPositionW" placeholder="W (deg)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label for="jogDistance">Jog Distance</label>
+                        <div class="row">
+                            <div class="col"> 
+                                <label for="">X (mm)</label>
+                                <input type="text" class="form-control" id="jogDistanceX" placeholder="X (mm)" value="10" disabled>
+                            </div>
+                            <div class="col">
+                                <label for="">Y (mm)</label>
+                                <input type="text" class="form-control" id="jogDistanceY" placeholder="Y (mm)" value="10" disabled>
+                            </div>
+                            <div class="col">
+                                <label for="">Z (mm)</label>
+                                <input type="text" class="form-control" id="jogDistanceZ" placeholder="Z (mm)" value="10" disabled>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <label for="">U (deg)</label>
+                                <input type="text" class="form-control" id="jogDistanceU" placeholder="U (deg)" value="10" disabled>
+                            </div>
+                            <div class="col">
+                                <label for="">V (deg)</label>
+                                <input type="text" class="form-control" id="jogDistanceV" placeholder="V (deg)" value="10" disabled>
+                            </div>
+                            <div class="col">
+                                <label for="">W (deg)</label>
+                                <input type="text" class="form-control" id="jogDistanceW" placeholder="W (deg)" value="10" disabled>
+                            </div>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="jogOption" id="jogLong" value="Long">
+                            <label class="form-check-label" for="jogLong">Long</label>
+                        </div>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label for="moveTo">Mover a</label>
+                        <select class="form-control" id="selectPoint" onchange="handleSelectChange(this)">
+                            <option value="">Select a point</option>
+                            {% for point in points %}
+                                <option value="{{ point.nNumber }}">{{ point.sLabel }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group mt-4">
+                                <label for="pickFuse">Hacer una insercion</label>
+                                <select class="form-control" id="fuseSelect2" onchange="handleSelectChange2(this)">
+                                        <option value="">Selecciona una opcion</option>
+                                        <option value="MINI_7.5,PDCP,F318">MINI_7.5,PDCP,F318</option>
+                                        <option value="ATO_15,PDCP,F332">ATO_15,PDCP,F332</option>
+                                        <option value="ATO_5,PDCP,F333">ATO_5,PDCP,F333</option>
+                                        <option value="MINI_15,PDCD,F232">MINI_15,PDCD,F232</option>
+                                        <option value="ATO_30,PDCD,F214">ATO_30,PDCD,F214</option>
+                                        <option value="ATO_30,PDCD,F212">ATO_30,PDCD,F212</option>
+                                        <option value="MINI_15,PDCP,F322">MINI_15,PDCP,F322</option>
+                                        <option value="ATO_15,PDCP,F300">ATO_15,PDCP,F300</option>
+                                        <option value="MULTI_5,PDCP,MF2">MULTI_5,PDCP,MF2</option>
+                                        <option value="ATO_25,PDCD,F216">ATO_25,PDCD,F216</option>
+                                        <option value="MINI_7.5,PDCD,F232">MINI_7.5,PDCD,F232</option>
+                                        <option value="MINI_5,PDCD,F221">MINI_5,PDCD,F221</option>
+                                        <option value="ATO_7.5,PDCD,F216">ATO_7.5,PDCD,F216</option>
+                                        <option value="MINI_5,PDCP,F305">MINI_5,PDCP,F305</option>
+                                        <option value="MINI_5,PDCD,F204">MINI_5,PDCD,F204</option>
+                                        <option value="MINI_5,PDCP,F321">MINI_5,PDCP,F321</option>
+                                        <option value="ATO_30,PDCP,F300">ATO_30,PDCP,F300</option>
+                                        <option value="MINI_5,PDCD,F231">MINI_5,PDCD,F231</option>
+                                        <option value="MINI_5,PDCD,F226">MINI_5,PDCD,F226</option>
+                                        <option value="ATO_5,PDCD,F216">ATO_5,PDCD,F216</option>
+                                        <option value="MINI_5,PDCD,F222">MINI_5,PDCD,F222</option>
+                                        <option value="MINI_5,PDCD,F208">MINI_5,PDCD,F208</option>
+                                        <option value="ATO_5,PDCD,F212">ATO_5,PDCD,F212</option>
+                                        <option value="MINI_5,PDCP,F325">MINI_5,PDCP,F325</option>
+                                        <option value="ATO_5,PDCD,F209">ATO_5,PDCD,F209</option>
+                                        <option value="MULTI_7.5,PDCP,MF2">MULTI_7.5,PDCP,MF2</option>
+                                        <option value="MINI_5,PDCD,F217">MINI_5,PDCD,F217</option>
+                                        <option value="MINI_5,PDCD,F205">MINI_5,PDCD,F205</option>
+                                        <option value="MINI_5,PDCP,F322">MINI_5,PDCP,F322</option>
+                                        <option value="MINI_5,PDCD,F227">MINI_5,PDCD,F227</option>
+                                        <option value="ATO_15,PDCD,F215">ATO_15,PDCD,F215</option>
+                                        <option value="MINI_5,PDCD,F207">MINI_5,PDCD,F207</option>
+                                        <option value="MINI_5,PDCD,F232">MINI_5,PDCD,F232</option>
+                                        <option value="ATO_7.5,PDCP,F335">ATO_7.5,PDCP,F335</option>
+                                        <option value="MINI_5,PDCD,F200">MINI_5,PDCD,F200</option>
+                                        <option value="MULTI_7.5,PDCP,MF1">MULTI_7.5,PDCP,MF1</option>
+                                        <option value="MINI_5,PDCD,F206">MINI_5,PDCD,F206</option>
+                                        <option value="MINI_5,PDCP,F318">MINI_5,PDCP,F318</option>
+                                        <option value="ATO_25,PDCP,F226">ATO_25,PDCP,F226</option>
+                                        <option value="MINI_5,PDCP,F304">MINI_5,PDCP,F304</option>
+                                        <option value="MINI_5,PDCP,F303">MINI_5,PDCP,F303</option>
+                                        <option value="MULTI_5,PDCP,MF1">MULTI_5,PDCP,MF1</option>
+                                        <option value="MINI_5,PDCP,F302">MINI_5,PDCP,F302</option>
+                                        <option value="ATO_25,PDCP,F335">ATO_25,PDCP,F335</option>
+                                        <option value="ATO_30,PDCP,F328">ATO_30,PDCP,F328</option>
+                                        <option value="ATO_15,PDCP,F300">ATO_15,PDCP,F300</option>
+                                        <option value="MINI_10,PDCP,F335">MINI_10,PDCP,F335</option>
+                                        <option value="MINI_5,PDCP,F301">MINI_5,PDCP,F301</option>                                        
+                                        <option value="MINI_10,PDCD,F207">MINI_10,PDCD,F207</option>
+                                        <option value="MINI_5,PDCD,F205">MINI_5,PDCD,F205</option>
+                                        <option value="MINI_10,PDCD,F208">MINI_10,PDCD,F208</option>
+                                        <option value="MINI_10,PDCD,F204">MINI_10,PDCD,F204</option>
+                                        <option value="MINI_5,PDCD,F204">MINI_5,PDCD,F204</option>
+                                        <option value="MINI_7.5,PDCD,F200">MINI_7.5,PDCD,F200</option>
+                                        <option value="MINI_10,PDCD,F208">MINI_10,PDCD,F208</option>
+                                        <option value="MINI_10,PDCD,F200">MINI_10,PDCD,F200</option>
+                                        <option value="MINI_5,PDCD,F200">MINI_5,PDCD,F200</option>
+                                        <option value="MINI_15,PDCD,F200">MINI_15,PDCD,F200</option>
+                                        <option value="MINI_10,PDCD,F201">MINI_10,PDCD,F201</option>
+                                        <option value="MINI_10,PDCD,F202">MINI_10,PDCD,F202</option>
+                                        <option value="MINI_10,PDCD,F203">MINI_10,PDCD,F203</option>
+                                        <option value="MINI_10,PDCD,F205">MINI_10,PDCD,F205</option>
+                                        <option value="MINI_10,PDCD,F207">MINI_10,PDCD,F207</option>
+                                        <option value="MINI_10,PDCD,F206">MINI_10,PDCD,F206</option>
+                                        <option value="MINI_10,PDCD,F208">MINI_10,PDCD,F208</option>
+                                        <option value="MINI_5,PDCD,F201">MINI_5,PDCD,F201</option>
+                                        <option value="MINI_5,PDCD,F202">MINI_5,PDCD,F202</option>
+                                        <option value="MINI_5,PDCD,F203">MINI_5,PDCD,F203</option>
+                                        <option value="MINI_5,PDCD,F204">MINI_5,PDCD,F204</option>
+                                        <option value="MINI_5,PDCD,F205">MINI_5,PDCD,F205</option>
+                                        <option value="MINI_5,PDCD,F206">MINI_5,PDCD,F206</option>
+                                        <option value="MINI_5,PDCD,F207">MINI_5,PDCD,F207</option>
+                                        <option value="MINI_5,PDCD,F208">MINI_5,PDCD,F208</option>
+                                        <option value="ATO_5,PDCD,F209">ATO_5,PDCD,F209</option>
+                                        <option value="ATO_5,PDCD,F216">ATO_5,PDCD,F216</option>
+                                        <option value="ATO_5,PDCD,F212">ATO_5,PDCD,F212</option>
+                                        <option value="ATO_5,PDCD,F211">ATO_5,PDCD,F211</option>
+                                        <option value="MINI_7.5,PDCD,F203">MINI_7.5,PDCD,F203</option>
+                                        <option value="MINI_7.5,PDCD,F202">MINI_7.5,PDCD,F202</option>
+                                        <option value="MINI_15,PDCD,F207">MINI_15,PDCD,F207</option>
+                                        <option value="MINI_7.5,PDCD,F208">MINI_7.5,PDCD,F208</option>
+                                        <option value="MINI_7.5,PDCD,F207">MINI_7.5,PDCD,F207</option>
+                                        <option value="MINI_5,PDCD,F207">MINI_5,PDCD,F207</option>
+                                        <option value="MINI_7.5,PDCD,F217">MINI_7.5,PDCD,F217</option>
+                                        <option value="MINI_7.5,PDCD,F208">MINI_7.5,PDCD,F208</option>
+                                        <option value="MINI_7.5,PDCD,F218">MINI_7.5,PDCD,F218</option>
+                                        <option value="MINI_7.5,PDCD,F421">MINI_7.5,PDCD,F421</option>
+                                        <option value="MINI_7.5,PDCD,F221">MINI_7.5,PDCD,F221</option>
+                                        <option value="ATO_25,PDCP,F326">ATO_25,PDCP,F326</option>
+                                        <option value="ATO_25,PDCD,F215">ATO_25,PDCD,F215</option>
+                                        <option value="ATO_25,PDCP,F328">ATO_25,PDCP,F328</option>
+                                        <option value="MINI_7.5,PDCP,F303">MINI_7.5,PDCP,F303</option>
+                                        <option value="ATO_30,PDCP,F329">ATO_30,PDCP,F329</option>
+                                        <option value="ATO_25,PDCP,F330">ATO_25,PDCP,F330</option>
+                                        <option value="ATO_30,PDCP,F330">ATO_30,PDCP,F330</option>
+                                        <option value="MINI_7.5,PDCP,F320">MINI_7.5,PDCP,F320</option>
+                                        <option value="MINI_7.5,PDCD,F219">MINI_7.5,PDCD,F219</option>
+                                        <option value="MINI_7.5,PDCD,F221">MINI_7.5,PDCD,F221</option>
+                                        <option value="MINI_7.5,PDCD,F222">MINI_7.5,PDCD,F222</option>
+                                        <option value="MINI_7.5,PDCD,F224">MINI_7.5,PDCD,F224</option>
+                                        <option value="MINI_7.5,PDCD,F226">MINI_7.5,PDCD,F226</option>
+                                        <option value="MINI_7.5,PDCD,F227">MINI_7.5,PDCD,F227</option>
+                                        <option value="MINI_7.5,PDCD,F230">MINI_7.5,PDCD,F230</option>
+                                        <option value="MINI_7.5,PDCD,F232">MINI_7.5,PDCD,F232</option>
+                                        <option value="MINI_7.5,PDCP,F301">MINI_7.5,PDCP,F301</option>
+                                        <option value="MINI_7.5,PDCP,F303">MINI_7.5,PDCP,F303</option>
+                                        <option value="MINI_7.5,PDCP,F305">MINI_7.5,PDCP,F305</option>
+                                        <option value="MINI_7.5,PDCP,F318">MINI_7.5,PDCP,F318</option>
+                                        <option value="MINI_7.5,PDCP,F321">MINI_7.5,PDCP,F321</option>
+                                        <option value="MINI_7.5,PDCP,F325">MINI_7.5,PDCP,F325</option>
+                                        <option value="MINI_7.5,PDCP,F304">MINI_7.5,PDCP,F304</option>
+                                        <option value="ATO_30,PDCD,F215">ATO_30,PDCD,F215</option>
+                                        <option value="ATO_15,PDCP,F332">ATO_15,PDCP,F332</option>
+                                        <option value="ATO_5,PDCD,F213">ATO_5,PDCD,F213</option>
+                                        <option value="ATO_30,PDCD,F214">ATO_30,PDCD,F214</option>
+                                        <option value="ATO_30,PDCD,F215">ATO_30,PDCD,F215</option>
+                                        <option value="ATO_15,PDCP,F332">ATO_15,PDCP,F332</option>
+                                        <option value="ATO_30,PDCD,F211">ATO_30,PDCD,F211</option>
+                                        <option value="ATO_25,PDCD,F216">ATO_25,PDCD,F216</option>
+                                        <option value="ATO_30,PDCD,F216">ATO_30,PDCD,F216</option>
+                                        <option value="ATO_25,PDCD,F211">ATO_25,PDCD,F211</option>
+                                        <option value="MINI_15,PDCD,F200">MINI_15,PDCD,F200</option>
+                                        <option value="ATO_25,PDCP,F335">ATO_25,PDCP,F335</option>
+                                        <option value="ATO_7.5,PDCD,F216">ATO_7.5,PDCD,F216</option>
+                                        <option value="MINI_7.5,PDCP,F318">MINI_7.5,PDCP,F318</option>
+                                        <option value="MINI_7.5,PDCP,F322">MINI_7.5,PDCP,F322</option>
+                                        <option value="MINI_15,PDCP,F301">MINI_15,PDCP,F301</option>
+                                        <option value="MINI_7.5,PDCP,F325">MINI_7.5,PDCP,F325</option>
+                                        <option value="ATO_30,PDCP,F209">ATO_30,PDCP,F209</option>
+                                        <option value="ATO_30,PDCD,F209">ATO_30,PDCD,F209</option>
+                                        <option value="ATO_15,PDCP,F300">ATO_15,PDCP,F300</option>
+                                        <option value="ATO_30,PDCD,F335">ATO_30,PDCD,F335</option>
+                                        <option value="ATO_30,PDCP,F335">ATO_30,PDCP,F335</option>
+                                        <option value="ATO_15,PDCP,F335">ATO_15,PDCP,F335</option>
+                                        <option value="MINI_10,PDCD,F204">MINI_10,PDCD,F204</option>
+                                        <option value="MINI_5,PDCP,F305">MINI_5,PDCP,F305</option>
+                                        <option value="MINI_5,PDCD,F207">MINI_5,PDCD,F207</option>
+                                        <option value="MINI_5,PDCD,F231">MINI_5,PDCD,F231</option>
+                                        <option value="MINI_5,PDCD,F232">MINI_5,PDCD,F232</option>
+                                        <option value="ATO_15,PDCP,F300">ATO_15,PDCP,F300</option>
+                                        <option value="MINI_5,PDCD,F221">MINI_5,PDCD,F221</option>
+                                        <option value="MINI_5,PDCD,F217">MINI_5,PDCD,F217</option>
+                                        <option value="MINI_10,PDCD,F200">MINI_10,PDCD,F200</option>
+                                        <option value="ATO_5,PDCD,F213">ATO_5,PDCD,F213</option>
+                                        <option value="MINI_10,PDCD,F217">MINI_10,PDCD,F217</option>
+                                        <option value="MINI_10,PDCD,F218">MINI_10,PDCD,F218</option>
+                                        <option value="ATO_25,PDCD,F216">ATO_25,PDCD,F216</option>
+                                        <option value="ATO_25,PDCP,F335">ATO_25,PDCP,F335</option>
+                                        <option value="MINI_7.5,PDCP,F318">MINI_7.5,PDCP,F318</option>
+                                        <option value="MINI_7.5,PDCP,F319">MINI_7.5,PDCP,F319</option>
+                                        <option value="MINI_7.5,PDCP,F320">MINI_7.5,PDCP,F320</option>
+                                        <option value="MINI_7.5,PDCP,F321">MINI_7.5,PDCP,F321</option>
+                                        <option value="MINI_7.5,PDCP,F322">MINI_7.5,PDCP,F322</option>
+                                        <option value="MINI_7.5,PDCP,F324">MINI_7.5,PDCP,F324</option>
+                                        <option value="MINI_7.5,PDCP,F323">MINI_7.5,PDCP,F323</option>
+                                        <option value="MINI_15,PDCD,F202">MINI_15,PDCD,F202</option>
+                                        <option value="MINI_5,PDCD,F217">MINI_5,PDCD,F217</option>
+                                        <option value="MINI_5,PDCD,F226">MINI_5,PDCD,F226</option>
+                                        <option value="MINI_5,PDCD,F232">MINI_5,PDCD,F232</option>
+                                        <option value="MINI_5,PDCD,F227">MINI_5,PDCD,F227</option>
+                                        <option value="ATO_30,PDCD,F216">ATO_30,PDCD,F216</option>
+                                        <option value="ATO_25,PDCD,F215">ATO_25,PDCD,F215</option>
+                                        <option value="ATO_25,PDCD,F216">ATO_25,PDCD,F216</option>
+                                        <option value="ATO_30,PDCD,F215">ATO_30,PDCD,F215</option>
+                                        <option value="ATO_15,PDCD,F210">ATO_15,PDCD,F210</option>
+                                        <option value="ATO_30,PDCD,F326">ATO_30,PDCD,F326</option>
+                                        <option value="ATO_30,PDCP,F326">ATO_30,PDCP,F326</option>
+                                        <option value="MULTI_5,PDCP,MF2">MULTI_5,PDCP,MF2</option>
+                                        <option value="ATO_15,PDCP,F326">ATO_15,PDCP,F326</option>
+                                        <option value="MULTI_5,PDCP,MF1">MULTI_5,PDCP,MF1</option>
+                                        <option value="ATO_25,PDCP,F334">ATO_25,PDCP,F334</option>
+                                        <option value="ATO_30,PDCP,F335">ATO_30,PDCP,F335</option>
+                                        <option value="ATO_7.5,PDCP,F329">ATO_7.5,PDCP,F329</option>
+                                        <option value="ATO_15,PDCP,F333">ATO_15,PDCP,F333</option>
+                                        <option value="ATO_10,PDCD,F210">ATO_10,PDCD,F210</option>
+                                        <option value="ATO_15,PDCD,F214">ATO_15,PDCD,F214</option>
+                                        <option value="ATO_5,PDCP,F332">ATO_5,PDCP,F332</option>
+                                        <option value="MULTI_7.5,PDCP,MF1">MULTI_7.5,PDCP,MF1</option>
+                                        <option value="ATO_10,PDCP,F300">ATO_10,PDCP,F300</option>
+                                        <option value="ATO_30,PDCP,F327">ATO_30,PDCP,F327</option>
+                                        <option value="ATO_30,PDCP,F330">ATO_30,PDCP,F330</option>
+                                        <option value="ATO_30,PDCP,F335">ATO_30,PDCP,F335</option>
+                                        <option value="ATO_30,PDCP,F326">ATO_30,PDCP,F326</option>
+                                        <option value="MINI_15,PDCD,F208">MINI_15,PDCD,F208</option>
+                                        <option value="MULTI_5,PDCP,MF2">MULTI_5,PDCP,MF2</option>
+                                        <option value="MINI_7.5,PDCP,F301">MINI_7.5,PDCP,F301</option>
+                                        <option value="MINI_7.5,PDCP,F325">MINI_7.5,PDCP,F325</option>
+                                        <option value="MINI_7.5,PDCP,F301">MINI_7.5,PDCP,F301</option>
+                                        <option value="MINI_5,PDCP,F305">MINI_5,PDCP,F305</option>
+                                        <option value="MINI_5,PDCP,F305">MINI_5,PDCP,F305</option>
+                                        <option value="MINI_5,PDCD,F222">MINI_5,PDCD,F222</option>
+                                        <option value="ATO_10,PDCP,F332">ATO_10,PDCP,F332</option>
+                                        <option value="MINI_5,PDCP,F301">MINI_5,PDCP,F301</option>                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Detalles de cada punto</h2>
+                    <div id="details"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/moverobot.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Diseño.js') }}"></script>
+</body>
+</html>

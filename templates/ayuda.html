@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA DE AYUDA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="{{ url_for('static', filename='css/ayudaMantenimiento.css') }}" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h1> Sección de ayuda a Mantenimiento</h1>
+    </header>
+    <h1>Índice con enlaces</h1>
+    
+    <ul>
+        <li><a href="#tema1">¿Las cajas no clampean?</a></li>
+
+        <li><a href="#subtema1-1">Los clamps no se mueven cuando la caja es colocada en el nido</a></li>
+        <li><a href="#subtema1-2">Los clamps se mueven e intentar clampear la caja pero se abren solos despues de pocos segundos</a></li>
+
+        <li><a href="#tema2">¿Los robots no se mueven?</a></li>
+        <li><a href="#subtema2-1">Subtema 2.1</a></li>
+        <li><a href="#subtema2-2">Subtema 2.2</a></li>
+        <li><a href="#subtema2-3">Subtema 2.3</a></li>
+        <li><a href="#tema3">Falla en la toma de fusible</a></li>
+        <li><a href="#tema4">Falla en la inserción</a></li>
+        <li><a href="#tema5">Robot tira fusibles en la toma o a medio camino de la insercion</a></li>
+        <li><a href="#tema5">Robot tira fusibles en la toma o a medio camino de la insercion</a></li>
+    </ul>
+
+    <section id="tema1">
+        <h2>¿Las cajas no clampean?</h2>
+        <div>
+            <p>1.- Verifique que la GDI se encuentra abierta y conectada al PLC.</p>
+        </div>
+        <div>
+            <p>2.- Verifique que hay presion de aire.</p>
+        </div>
+        <div>
+            <p>3.- verifique que la caja no esté quebrada o que nada se interponga entre la caja y los limit switch del nido(sinchos, fusibles, Cintas, etc.) .</p>
+        </div>
+        <ul>
+            <li><a href="#subtema1-1">Los clamps no se mueven cuando la caja es colocada en el nido</a></li>
+            <li><a href="#subtema1-2">Los clamps se mueven e intentar clampear la caja pero se abren solos despues de pocos segundos</a></li>
+            
+        </ul>
+    </section>
+
+    <section id="subtema1-1">
+        <h3>Los clamps no se mueven cuando la caja es colocada en el nido</h3>
+        <p>
+            En la sección de clampeo seleccione la caja que presenta la falla para mandar la señal de clampeo (imagen de interfaz señalando seccion de clampeo)
+        </p>
+
+        <p>
+            Presione de forma manual los limit switch que detectan la presencia de la caja y si los clamps se mueven para clampear la caja, entonces verifique que la caja no esté quebrada o que no exista nada que se interponga (sinchos, fusibles, Cintas, etc.) entre la caja y los limit switch del nido.
+            Si los clamps no se mueven cuando se presionan manualmente los limit switch, entonces alguno de los limit switch esta dañado, verificar estado fisico y eléctrico, y reemplace si es necesario)
+        </p>
+    </section>
+
+    <section id="subtema1-2">
+        <h3>Los clamps se mueven e intentar clampear la caja pero se abren solos despues de pocos segundos</h3>
+        <p>Verifique los sensores de final de Carrera, fisicamente deben de prender rojo cuando la caja está posicionada correctamente.</p>
+    </section>
+
+    <section id="subtema1-3">
+        <h3>Subtema 1.3</h3>
+        <p>Contenido del subtema 1.3.</p>
+    </section>
+
+    <!-- Repetir la estructura para los demás temas y subtemas -->
+
+    <section id="tema2">
+        <h2>¿Los robots no se mueven?</h2>
+        <p>1.- Verificar que el robot se encuentra encendido</p>
+        <img id="final_img1" src="{{ url_for('static', filename='images/imagen_final.jpg') }}" alt="Descripción de la imagen">
+        <p>2.- Verificar que la cortina no está interrumpida y que las puertas de seguridad se encuentren cerradas</p>
+        <p>3.- </p>
+        <ul>
+            <li><a href="#subtema2-1">Subtema 2.1</a></li>
+            <li><a href="#subtema2-2">Subtema 2.2</a></li>
+            <li><a href="#subtema2-3">Subtema 2.3</a></li>
+        </ul>
+    </section>
+
+    <section id="subtema2-1">
+        <h3>Subtema 2.1</h3>
+        <p>Contenido del subtema 2.1.</p>
+    </section>
+
+    <section id="subtema2-2">
+        <h3>Subtema 2.2</h3>
+        <p>Contenido del subtema 2.2.</p>
+    </section>
+
+    <section id="subtema2-3">
+        <h3>Subtema 2.3</h3>
+        <p>Contenido del subtema 2.3.</p>
+    </section>
+
+    <!-- Se repite el mismo patrón para los temas restantes -->
+
+    <section id="tema3">
+        <h2>Tema 3</h2>
+        <p>Contenido del tema 3.</p>
+        <ul>
+            <li><a href="#subtema3-1">Subtema 3.1</a></li>
+            <li><a href="#subtema3-2">Subtema 3.2</a></li>
+            <li><a href="#subtema3-3">Subtema 3.3</a></li>
+        </ul>
+    </section>
+
+    <section id="subtema3-1">
+        <h3>Subtema 3.1</h3>
+        <p>Contenido del subtema 3.1.</p>
+    </section>
+
+    <section id="subtema3-2">
+        <h3>Subtema 3.2</h3>
+        <p>Contenido del subtema 3.2.</p>
+    </section>
+
+    <section id="subtema3-3">
+        <h3>Subtema 3.3</h3>
+        <p>Contenido del subtema 3.3.</p>
+    </section>
+
+    <section id="tema4">
+        <h2>Tema 4</h2>
+        <p>Contenido del tema 4.</p>
+        <ul>
+            <li><a href="#subtema4-1">Subtema 4.1</a></li>
+            <li><a href="#subtema4-2">Subtema 4.2</a></li>
+            <li><a href="#subtema4-3">Subtema 4.3</a></li>
+        </ul>
+    </section>
+
+    <section id="subtema4-1">
+        <h3>Subtema 4.1</h3>
+        <p>Contenido del subtema 4.1.</p>
+    </section>
+
+    <section id="subtema4-2">
+        <h3>Subtema 4.2</h3>
+        <p>Contenido del subtema 4.2.</p>
+    </section>
+
+    <section id="subtema4-3">
+        <h3>Subtema 4.3</h3>
+        <p>Contenido del subtema 4.3.</p>
+    </section>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tablas de Fallos</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tablas de Fallos</h1>
+
+    <form method="GET" action="/estadisticas">
+        <label for="start_date">Fecha de inicio:</label>
+        <input type="datetime-local" id="start_date" name="start_date" required>
+        <label for="end_date">Fecha de fin:</label>
+        <input type="datetime-local" id="end_date" name="end_date" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% for tabla, df in tablas.items() %}
+        <h2>{{ tabla }} ({{ totales[tabla] }})</h2>
+        <table>
+            <tr>
+                <th>Cavidad (Fusible)</th>
+                <th>Conteo</th>
+            </tr>
+            {% for _, row in df.iterrows() %}
+            <tr>
+                <td>{{ row['Cavidad (Fusible)'] }}</td>
+                <td>{{ row['Conteo'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+
+    <h2>Top 5 fallos por tabla</h2>
+    {% for tabla, df in top5_por_tabla.items() %}
+        <h3>{{ tabla }}</h3>
+        <table>
+            <tr>
+                <th>Cavidad (Fusible)</th>
+                <th>Conteo</th>
+            </tr>
+            {% for _, row in df.iterrows() %}
+            <tr>
+                <td>{{ row['Cavidad (Fusible)'] }}</td>
+                <td>{{ row['Conteo'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+
+    <h2>Top 5 fallos en general</h2>
+    <table>
+        <tr>
+            <th>Cavidad (Fusible)</th>
+            <th>Conteo</th>
+        </tr>
+        {% for _, row in top5_general.iterrows() %}
+        <tr>
+            <td>{{ row['Cavidad (Fusible)'] }}</td>
+            <td>{{ row['Conteo'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

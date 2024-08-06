@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EIAF-3</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    {% include 'Includes/head.html' %}
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .chart-container {
+            margin-bottom: 50px;
+        }
+        .total-buenos {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero_area">
+        {% include 'Includes/header.html' %}
+        <div class="container">
+            <h1 class="my-4">Fallos en robot de insercion 3</h1>
+
+            <form class="mb-4" method="GET" action="/estadisticas">
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label for="start_date">Fecha de inicio:</label>
+                        <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="end_date">Fecha de fin:</label>
+                        <input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+                    <div class="form-group col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="total-buenos">
+                Total de arneses pasados: <span class="badge rounded-pill bg-primary">{{ total_resultados_buenos }}</span>
+            </div>
+
+            <h2>Top 5 Fallos Generales Más Comunes</h2>
+            <table class="table table-primary">
+                <thead class="thead-primary">
+                    <tr>
+                        <th>Cavidad (Fusible)</th>
+                        <th>Conteo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for _, row in top5_general.iterrows() %}
+                    <tr>
+                        <td>{{ row['Cavidad (Fusible)'] }}</td>
+                        <td>{{ row['Conteo'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% for tabla, datos in tablas.items() %}
+                <div class="chart-container">
+                    <h2>Gráficas de {{ tabla }}  ({{ totales[tabla] }})</h2>
+                    <canvas id="chart-{{ tabla }}"></canvas>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            try {
+                                var ctx = document.getElementById('chart-{{ tabla }}').getContext('2d');
+                                var labels = {{ datos.keys() | list | tojson | safe }};
+                                var datasets = [];
+                                var colors = [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ];
+                                var borderColors = [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ];
+
+                                var dataDict = {{ datos | tojson | safe }};
+                                var weeks = Object.keys(dataDict[labels[0]]);
+                                var semanas_fechas = {{ semanas_fechas | tojson | safe }};
+
+                                weeks.forEach((week, index) => {
+                                    var data = [];
+                                    labels.forEach(label => {
+                                        data.push(dataDict[label][week] || 0);
+                                    });
+
+                                    datasets.push({
+                                        label: `Semana ${week} (${semanas_fechas[week][0]} - ${semanas_fechas[week][1]})`,
+                                        data: data,
+                                        backgroundColor: colors[index % colors.length],
+                                        borderColor: borderColors[index % borderColors.length],
+                                        borderWidth: 1
+                                    });
+                                });
+
+                                new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: labels,
+                                        datasets: datasets
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                stacked: true
+                                            },
+                                            x: {
+                                                stacked: true
+                                            }
+                                        }
+                                    }
+                                });
+                            } catch (error) {
+                                console.error('Error al crear la gráfica:', error);
+                            }
+                        });
+                    </script>
+                </div>
+
+                <h3>Top 5 Fallos en {{ tabla }}</h3>
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Cavidad (Fusible)</th>
+                            <th>Conteo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for _, row in top5_por_tabla[tabla].iterrows() %}
+                        <tr>
+                            <td>{{ row['Cavidad (Fusible)'] }}</td>
+                            <td>{{ row['Conteo'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    {% include 'Includes/scripts.html' %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

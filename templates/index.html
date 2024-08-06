@@ -1,0 +1,540 @@
+{% if 'TIPO' in session and (session['TIPO'] == 'AMTC' or session['TIPO'] == 'SUPERUSUARIO' or session['TIPO'] == 'MANTENIMIENTO') %}
+<!DOCTYPE html>
+<html>
+  <title>Fujikura</title>
+  {% include 'Includes/head.html' %}
+<body>
+  <div class="hero_area">
+    <!-- header section strats -->
+    {% include 'Includes/header.html' %}
+    <!-- end header section -->
+
+    <!-- slider section -->
+    <section class=" slider_section position-relative">
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="slider_item-box layout_padding2">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="img-box">
+                      <div>
+                        <img src="{{ url_for('static', filename='images/slider-img.png') }}" alt="" class="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="detail-box">
+                      <div>
+                        <h1>
+                          Fujikura  <br>
+                          Mantenimiento <br>
+                          <span style="color: #5e84ee;">
+                            Problemas comunes
+                          </span>
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+    <!-- end slider section -->
+  </div>
+  <section class="other_section">
+    <div class="container" style="text-align: left;">
+        <div class="mt-3 d-flex justify-content-center align-items-center" style="height: 0vh; margin-bottom: 100px;">
+            <form class="d-flex">
+                <div class="input-group" style="width: 300px; height: 50px;">
+                    <input style="height: 50px;" id="searchInput2" class="form-control" type="text" placeholder="Buscar" aria-label="Search" oninput="searchFunction()">
+                    <button class="btn btn-outline-dark" type="button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="ayudas">
+            <a href="ayuda.html#tema1" onclick="toggleMenu(event, 'submenu1')">¿Las cajas no clampean?</a>
+            <div id="submenu1" class="submenu">
+                <a href="ayuda.html">Los clamps no se mueven cuando la caja es colocada </a>
+                <a href="ayuda.html#subtema1-2">Los clamps se mueven e intentar clampear</a>
+                
+            </div>
+        </div>
+        <div class="ayudas">
+            <a href="ayuda.html#tema2" onclick="toggleMenu(event, 'submenu2')">¿Los robots no se mueven?</a>
+            <div id="submenu2" class="submenu">
+                <a href="ayuda.html#subtema2-1">Opción 1</a>
+                <a href="ayuda.html#subtema2-2">Opción 2</a>
+                <a href="ayuda.html#subtema2-3">Opción 3</a>
+            </div>
+        </div>
+        <div class="ayudas">
+            <a href="ayuda.html#tema3" onclick="toggleMenu(event, 'submenu3')">Falla en la toma de fusible</a>
+            <div id="submenu3" class="submenu">
+                <a href="#">Opción 1</a>
+                <a href="#">Opción 2</a>
+                <a href="#">Opción 3</a>
+            </div>
+        </div>
+        <div class="ayudas">
+            <a href="ayuda.html#tema4" onclick="toggleMenu(event, 'submenu4')">Falla en la inserción</a>
+            <div id="submenu4" class="submenu">
+                <a href="#">Opción 1</a>
+                <a href="#">Opción 2</a>
+                <a href="#">Opción 3</a>
+            </div>
+        </div>
+        <div class="ayudas">
+            <a href="ayuda.html#tema5" onclick="toggleMenu(event, 'submenu5')">Los robots se mueven pero después se detienen solos</a>
+            <div id="submenu5" class="submenu">
+                <a href="#" onclick="toggleMenu(event, 'submenu6')">Opción 1</a>
+                  <div id="submenu6" class="submenu">
+                    <a href="#">Opcion 1.1</a>
+                    <a href="#">Opcion 1.2</a>
+                  </div>
+                <a href="#">Opción 2</a>
+                <a href="#">Opción 3</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <div class="bg">
+    <!-- about section -->
+    <section class="about_section layout_padding" id="Buscar">
+      <div class="mt-3 d-flex justify-content-center align-items-center" style="height: 0vh; margin-bottom: 100px;">
+        <form class="d-flex">
+            <div class="input-group" style="width: 500px; height: 50px;">    
+                <input style="height: 50px;" id="searchInput" class="form-control" type="text" placeholder="Buscar" aria-label="Search" oninput="searchFunction()">
+                <button class="btn btn-outline-dark" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+      <!--        Acomodar cards            -->
+      <div class="d-flex flex-wrap justify-content-start">
+        <div class="card custom_width custom_margin">
+            <img src="{{ url_for('static', filename='images/ventosa.jpg') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Cambiar ventosa</h5>
+                <p class="card-text">Presiona el botón para intercambiar la ventosa</p>
+                <a href="#" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal1">Cambiar ventosa</a>
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Selecciona una opción</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                              <button class="modal-button" data-bs-toggle="modal" onclick="sendMQTTMessage('CV1')">Robot A</button>
+                              <button class="modal-button" data-bs-toggle="modal" onclick="sendMQTTMessage('CV2')" >Robot B</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Fin carta 1 -->
+    <!-- carta 2 -->
+    <div class="card custom_width custom_margin">
+        <img src="{{ url_for('static', filename='images/clampeo.jpg') }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Habilitar cajas</h5>
+            <p class="card-text">Probar que las cajas se clampeen correctamente</p>
+            <a href="#" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal2">Habilitar</a>
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel2">Selecciona una opción</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Aquí van los botones -->
+                            <button class="modal-button" onclick="sendMQTTMessage('PDC-R'); iniciarProceso()">PDC-R</button>
+                            <button class="modal-button" onclick="sendMQTTMessage('PDC-RMID')" disabled>PDC-RMID</button>
+                            <button class="modal-button" onclick="sendMQTTMessage('PDC-D'); iniciarProceso_D()">PDC-D</button>
+                            <button class="modal-button" onclick="sendMQTTMessage('PDC-P'); iniciarProceso_P()">PDC-P</button>
+                            <button class="modal-button" onclick="sendMQTTMessage('TBLU');iniciarProceso_TBLU()">TBLU</button>
+                            <button class="modal-button" onclick="sendMQTTMessage('PDC-S'); iniciarProceso_S()">PDC-S</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fin carta 2 -->
+          <div class="card custom_width custom_margin">
+            <img src="{{ url_for('static', filename='images/vacio1.png') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Verificar vacio</h5>
+                <p class="card-text">Probar que se este haciendo el vacio</p>
+                <a href="#" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModalv">Probar vacio</a>
+                <div class="modal fade" id="exampleModalv" tabindex="-1" aria-labelledby="exampleModalLabelv" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel2">Selecciona una opción</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                            <button class="modal-button" data-bs-toggle="modal" data-bs-target="#exampleModalRAV">Robot A</button>
+                            <button class="modal-button" data-bs-toggle="modal" data-bs-target="#exampleModalRBV">Robot B</button> 
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Modal robot AV -->
+      <div class="modal fade" id="exampleModalRAV" tabindex="-1" aria-labelledby="exampleModalLabelRAV" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn-regresar" onclick="regresarModal('exampleModalRAV', 'exampleModalv')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left btn-regresar-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M5.854 4.146a.5.5 0 0 1 0 .708L2.707 8H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                        Regresar
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel1" style="font-size: 1rem;">Selecciona una opcion de vacio del robot A</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button class="modal-button" onclick="sendMQTTMessage('V1')">Herramienta 1</button>
+                    <button class="modal-button" onclick="sendMQTTMessage('V2')">Herramienta 2</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal RobotBV -->
+    <div class="modal fade" id="exampleModalRBV" tabindex="-1" aria-labelledby="exampleModalLabelRBV" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button class="btn-regresar" onclick="regresarModal('exampleModalRBV', 'exampleModalv')">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left btn-regresar-icon" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M5.854 4.146a.5.5 0 0 1 0 .708L2.707 8H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/>
+                      </svg>
+                      Regresar
+                  </button>
+                  <h5 class="modal-title" id="exampleModalLabel1" style="font-size: 1rem;">Selecciona una opcion de vacio del robot B</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <button class="modal-button" onclick="sendMQTTMessage('V3')">Herramienta 1</button>
+                  <button class="modal-button" onclick="sendMQTTMessage('V4')">Herramienta 2</button>
+              </div>
+          </div>
+      </div>
+  </div>
+        
+        <div class="card custom_width custom_margin">
+          <img src="{{ url_for('static', filename='images/fusibles.webp') }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Tomar fusible</h5>
+            <p class="card-text">Probar que el robot este tomando los fusibles correctamente</p>
+            <a href="#" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal4">Tomar fusible</a>
+            <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel2">Selecciona una opción</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Aquí van los fusibles -->
+                            <div style="position: absolute; top: 0; right: 0;">
+                            <button class="btn btn-warning" onclick="sendMQTTMessage('Stop');">Mandar a inicio</button>
+                            </div>
+                            <select required id="mySelect">
+                              <option value="" disabled selected>Seleccione un fusible</option>
+                              <option value="MINI_15 R1">MINI 15 ROBOT A</option>
+                              <option value="MULTI_7.5 R1">MULTI 7.5 ROBOT A</option>
+                              <option value="ATO_15 R1">ATO 15 ROBOT A</option>
+                              <option value="ATO_5 R1">ATO 5 ROBOT A</option>
+                              <option value="MULTI_5 R1">MULTI 5 ROBOT A</option>
+                              <option value="ATO_7.5 R1">ATO 7.5 ROBOT A</option>
+                              <option value="ATO_25 R1">ATO 25 ROBOT A</option>
+                              <option value="ATO_30 R1">ATO 30 ROBOT A</option>
+                              <option value="MINI_5 R1">MINI 5 ROBOT A</option>
+                              <option value="MINI_10 R1">MINI 10 ROBOT A</option>
+                              <option value="MINI_7.5 R1">MINI 7.5 ROBOT A</option>
+                              <option value="MINI_5">MINI 5 ROBOT B</option>
+                              <option value="MINI_7.5">MINI 7.5 ROBOT B</option>
+                              <option value="MINI_10">MINI 10 ROBOT B</option>
+                              <option value="ATO_7.5">ATO 7.5 ROBOT B</option>
+                              <option value="ATO_25">ATO 25 ROBOT B</option>
+                              <option value="ATO_30">ATO 30 ROBOT B</option>
+                              <option value="RELAY_132">RELAY 132 ROBOT B</option>
+                              <option value="RELAY_112">RELAY 112 ROBOT B</option>
+                              <option value="MINI_15">MINI 15 ROBOT B</option>
+                              <option value="ATO_15">ATO 15 ROBOT B</option>
+                              <option value="MAXI_50">MAXI 50 ROBOT B</option>
+                              <option value="MAXI_40">MAXI 40 ROBOT B</option>
+                              <option value="MAXI_30">MAXI 30 ROBOT B</option>
+                              <option value="ATOC_10">ATOC 10 ROBOT B</option>
+                              <option value="ATOC_5">ATOC 5 ROBOT B</option>
+                              <option value="ATO_20">ATO 20 ROBOT B</option>
+                              <option value="ATO_5">ATO 5 ROBOT B</option>
+                              <option value="ATO_10">ATO 10 ROBOT B</option>
+                              <option value="ATO_15">ATO 15 ROBOT B</option>
+                          </select>
+                          <div class="d-flex justify-content-center margen">
+                              <button class="btn btn-primary" id="sendFuseButton">Tomar fusible</button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap justify-content-start">
+        <div class="card custom_width custom_margin">
+            <img src="{{ url_for('static', filename='images/calibrar.webp') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Calibrar robot</h5>
+                <p class="card-text">Presiona el botón para calibrar</p>
+                <a href="#" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal3">Calibracion</a>
+                <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Selecciona una opcion</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                              <button class="modal-button" data-bs-toggle="modal" data-bs-target="#exampleModalRA">Robot A</button>
+                              <button class="modal-button" data-bs-toggle="modal" data-bs-target="#exampleModalRB">Robot B</button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal robot A -->
+        <div class="modal fade" id="exampleModalRA" tabindex="-1" aria-labelledby="exampleModalLabelRA" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button class="btn-regresar" onclick="regresarModal('exampleModalRA', 'exampleModal3')">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left btn-regresar-icon" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M5.854 4.146a.5.5 0 0 1 0 .708L2.707 8H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/>
+                          </svg>
+                          Regresar
+                      </button>
+                      <h5 class="modal-title" id="exampleModalLabelcarr2" style="font-size: 1rem;">Selecciona una opcion del robot A</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <button onclick="redirectTo('/pasos?robot=RobotA&herramienta=Herramienta1');" class="modal-button">Herramienta 1</button>
+                      <button onclick="redirectTo('/pasos?robot=RobotA&herramienta=Herramienta2');" class="modal-button">Herramienta 2</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Modal RobotB -->
+      <div class="modal fade" id="exampleModalRB" tabindex="-1" aria-labelledby="exampleModalLabelRB" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn-regresar" onclick="regresarModal('exampleModalRB', 'exampleModal3')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left btn-regresar-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M5.854 4.146a.5.5 0 0 1 0 .708L2.707 8H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                        Regresar
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLabelcarr2" style="font-size: 1rem;">Selecciona una opcion del robot B</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button onclick="redirectTo('/pasos?robot=RobotB&herramienta=Herramienta1');" class="modal-button">Herramienta 1</button>
+                    <button onclick="redirectTo('/pasos?robot=RobotB&herramienta=Herramienta2');" class="modal-button">Herramienta 2</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Card 6 -->
+        <div class="card custom_width custom_margin">
+          <img src="{{ url_for('static', filename='images/carrera.webp') }}" class="card-img-top" alt="...">
+          <div class="card-body">
+              <h5 class="card-title">Cilindro de final de carrera</h5>
+              <p class="card-text">Verificacion para los cilindros de final de carrera</p>
+              <a href="#" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModalcarr">Calibracion</a>
+                <div class="modal fade" id="exampleModalcarr" tabindex="-1" aria-labelledby="exampleModalLabelcarr" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabelcarr">Selecciona una opcion</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                              <button class="modal-button" data-bs-toggle="modal" data-bs-target="#exampleModalcarr1">Robot A</button>
+                              <button class="modal-button" data-bs-toggle="modal" data-bs-target="#exampleModalcarr2">Robot B</button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+              <!-- Modal robot A -->
+              <div class="modal fade" id="exampleModalcarr1" tabindex="-1" aria-labelledby="exampleModalLabelcarr1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="btn-regresar" onclick="regresarModal('exampleModalcarr1', 'exampleModalcarr')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left btn-regresar-icon" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M5.854 4.146a.5.5 0 0 1 0 .708L2.707 8H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/>
+                                </svg>
+                                Regresar
+                            </button>
+                            <h5 class="modal-title" id="exampleModalLabel1" style="font-size: 1rem;">Selecciona una opcion de cilindro del robot A</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <button onclick="redirectTo('/carrera?robot=RobotA&herramienta=Herramienta1');" class="modal-button">Herramienta 1</button>
+                            <button onclick="redirectTo('/carrera?robot=RobotA&herramienta=Herramienta2');" class="modal-button">Herramienta 2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <!-- Modal RobotB -->
+              <div class="modal fade" id="exampleModalcarr2" tabindex="-1" aria-labelledby="exampleModalLabelcarr2" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="btn-regresar" onclick="regresarModal('exampleModalcarr2', 'exampleModalcarr')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left btn-regresar-icon" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M5.854 4.146a.5.5 0 0 1 0 .708L2.707 8H14.5a.5.5 0 0 1 0 1H2.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/>
+                                </svg>
+                                Regresar
+                            </button>
+                            <h5 class="modal-title" id="exampleModalLabelcarr2" style="font-size: 1rem;">Selecciona una opcion de cilindro del robot B</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <button onclick="redirectTo('/carrera?robot=RobotB&herramienta=Herramienta1');" class="modal-button">Herramienta 1</button>
+                            <button onclick="redirectTo('/carrera?robot=RobotB&herramienta=Herramienta2');" class="modal-button">Herramienta 2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- Card 7 -->
+      <div class="card custom_width custom_margin">
+        <img src="{{ url_for('static', filename='images/vacio.png') }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Mover robot</h5>
+            <p class="card-text">Mover y crear nuevas puntos en el robot</p>
+            <a href="/mrobot" class="custom-button" onclick="sendMQTTMessage('Stop');">Mover robot</a>
+        </div>
+    </div>
+    <!-- Card 8 -->
+       <!-- <div class="card custom_width custom_margin">
+      <img src="{{ url_for('static', filename='images/vacio.png') }}" class="card-img-top" alt="...">
+      <div class="card-body">
+          <h5 class="card-title">Clampeo</h5>
+          <p class="card-text">Probar que el clampeo se esté haciendo correctamente</p>
+          <a href="#" class="custom-button">Probar clampeo</a>
+      </div>
+  </div> -->
+      <!--        Fin cards            -->
+      </div>
+    </section>
+    <!-- end about section -->
+
+    <!-- contact section -->
+
+    <section class="contact_section layout_padding" id="Problemas">
+      <div class="custom_heading-container">
+        <h3 class=" ">
+          ¿No encuentras la solucion de un problema?, reportalo aqui
+        </h3>
+      </div>
+      <div class="container layout_padding2-top">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <form action="/registro" method="POST" id="registroForm">
+              <div>
+                <input type="text" placeholder="NOMBRE" value="{{ session['nombre_usuario'] }}" id="nombre" name="nombre" readonly>
+              </div>
+              <div>
+                <select name="area" id="area" required>
+                  <option value="" disabled selected>AREA DEL PROBLEMA</option>
+                  <option value="Insercion 1">Insercion 1</option>
+                  <option value="Insercion 2">Insercion 2</option>
+                  <option value="Insercion 3">Insercion 3</option>
+                </select>
+              </div>
+              <div>
+                <input type="text" id="problema" name="problema" placeholder="Describe el problema">
+              </div>
+              <div class="d-flex justify-content-center ">
+                <button type="submit" class="btn btn-primary" id="submitBtn" onclick="reproducirGif()" disabled>ENVIAR</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+    <!-- Overlay difuminado -->
+    <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(151, 151, 151, 0.5); z-index: 999;"></div>
+    <!-- Fin overlay difuminado -->
+
+    <!-- GIF "Enviado" -->
+    <div id="gifContainer" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 1000;">
+      <img src="{{ url_for('static', filename='images/send.gif') }}" alt="Gif">
+      <p id="thanksMessage" style="margin-top: 10px; font-size: 20px; color: #000;">¡Gracias!</p>
+    </div>
+    <!-- Fin GIF "Enviado"  -->
+
+
+    <!-- Inicio footer section -->
+    <section class="container-fluid footer_section bg-dark text-white">
+      <p style="color: white;">
+          Copyright &copy; 2024 Fujikura All Rights Reserved
+      </p>
+  </section>
+  
+    <!-- Fin footer section -->
+
+    <!-- Inicio JS -->
+    {% include 'Includes/scripts.html' %}
+</body>
+
+</html>
+{% endif %}
